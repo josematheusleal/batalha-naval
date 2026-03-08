@@ -1,0 +1,38 @@
+.board-wrapper {
+  display: grid;
+  grid-template-columns: 30px auto; /* 30px para os números, resto para o tabuleiro */
+  grid-template-rows: 30px auto;    /* 30px para as letras, resto para o tabuleiro */
+  gap: 10px;
+}
+
+.coords-letters {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(10, 40px); /* Mesma largura das células */
+  align-items: center;
+  justify-items: center;
+}
+
+.coords-numbers {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-rows: repeat(10, 40px); /* Mesma altura das células */
+  align-items: center;
+  justify-items: center;
+}
+
+.coord-label {
+  font-family: 'Inter', sans-serif; /* Ou outra fonte sans-serif limpa */
+  font-weight: 700;
+  color: #9ca3af; /* Cinza claro do design */
+  font-size: 14px;
+}
+
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    border: 2px solid #ffffff;
+    background-color: #c6e4ff;
+}

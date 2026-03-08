@@ -1,0 +1,8 @@
+.ship-capsule {
+  background-color: #b6b5b581;
+  border-radius: 20px;
+  margin: 4px;
+  z-index: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}

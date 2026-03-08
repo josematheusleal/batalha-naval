@@ -1,0 +1,26 @@
+.grid-cell {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+    border: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  z-index: 1;
+}
+
+.grid-cell:hover {
+  background-color: rgba(99, 101, 102, 0.295)
+}
+
+.marker {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.miss { background-color: #66b3ff; }
+.hit { background-color: #ff4d4d; }
+.ship { background-color: #b3b3b3; }
