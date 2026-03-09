@@ -4,12 +4,21 @@ import Header from '../components/Header';
 import Board from '../components/Board';
 import { mapBackendToFrontendBoard } from '../utils/BoardMapper';
 import './Game.css';
+import hitAudio from '../assets/hit.mp3';
+import missAudio from '../assets/miss.mp3';
+
+const somHit = new Audio(hitAudio);
+const somMiss = new Audio(missAudio);
+
+somHit.volume = 0.5; 
+somMiss.volume = 0.5;
 
 export default function Game() {
   const navigate = useNavigate();
   const gameId = localStorage.getItem('currentGameId');
   const loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
 
+  const prevOpponentBoard = useRef(Array(100).fill('empty'));
   const [gameState, setGameState] = useState(null);
   const [playerBoard, setPlayerBoard] = useState(Array(100).fill('empty'));
   const [opponentBoard, setOpponentBoard] = useState(Array(100).fill('empty'));
@@ -67,7 +76,6 @@ export default function Game() {
     return () => clearInterval(interval);
   }, []);
 
-  // 3. Ações de Combate
   const handlePlayerAttack = async (idx) => {
     if (!isMyTurn || gameState?.state !== 'playing') return;
     setAnimatingIndex(idx);
@@ -81,6 +89,8 @@ export default function Game() {
         body: JSON.stringify({ row, col })
       });
       
+      // Tiramos os sons daqui! Agora o React vai vigiar o tabuleiro.
+      
       setTimeout(() => {
           setAnimatingIndex(null); 
           fetchGameState();       
@@ -90,6 +100,47 @@ export default function Game() {
       alert("Erro ao atacar!");
     }
   };
+
+  // efeitos sonoros
+  useEffect(() => {
+    if (!gameState || gameState.state !== 'playing') {
+      prevOpponentBoard.current = opponentBoard;
+      return;
+    }
+
+    const prev = prevOpponentBoard.current;
+    const current = opponentBoard;
+
+    const changedIndex = current.findIndex((cell, i) => prev[i] !== cell);
+
+    if (changedIndex !== -1) {
+      const estadoAntigo = prev[changedIndex];
+      const estadoNovo = current[changedIndex];
+      
+      // VAMOS VER O QUE ELE ESCREVE AQUI:
+      console.log(`🎯 TABULEIRO INIMIGO MUDOU! Index: ${changedIndex} | Antes: ${estadoAntigo} | Agora: ${estadoNovo}`);
+
+      // Se for a primeira vez que o tabuleiro carrega, ignoramos
+      if (estadoAntigo !== 'empty' || (estadoNovo !== 'empty' && estadoNovo !== 'hidden')) {
+          
+          // Se a palavra contiver "hit" ou "sunk", é explosão na certa!
+      if (estadoNovo.includes('hit') || estadoNovo.includes('sunk')) {
+          somHit.currentTime = 0;
+          somHit.play().catch(e => console.log("Erro no áudio:", e));
+          
+      // Se contiver "water" ou "miss", é água!
+      } else if (estadoNovo.includes('water') || estadoNovo.includes('miss')) {
+          somMiss.currentTime = 0;
+          somMiss.play().catch(e => console.log("Erro no áudio:", e));
+      
+          } else {
+              console.log(`⚠️ ATENÇÃO: Palavra desconhecida: ${estadoNovo}. O som não sabe o que tocar!`);
+          }
+      }
+    }
+
+    prevOpponentBoard.current = current;
+  }, [opponentBoard, gameState]);
 
   useEffect(() => {
     if (!gameState || gameState.state !== 'playing') {
@@ -109,7 +160,15 @@ export default function Game() {
       console.log(`MUDANÇA DETECTADA! Index: ${changedIndex} | Antes: ${estadoAntigo} | Agora: ${estadoNovo}`);
 
       if (estadoNovo !== 'ship' && estadoNovo !== 'empty') {
-        console.log("É UM ATAQUE DA IA, Ligando animação...");
+        console.log("É UM ATAQUE DA IA, Ligando animação e som...");
+        
+        if (estadoNovo.includes('hit') || estadoNovo.includes('sunk')) {
+            somHit.currentTime = 0;
+            somHit.play().catch(e => console.log("Erro no áudio:", e));
+        } else if (estadoNovo.includes('water') || estadoNovo.includes('miss')) {
+            somMiss.currentTime = 0;
+            somMiss.play().catch(e => console.log("Erro no áudio:", e));
+        }
         
         setAiAnimatingIndex(changedIndex);
         setTimeout(() => {

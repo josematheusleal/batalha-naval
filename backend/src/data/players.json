@@ -47,10 +47,10 @@
     "nome": "Daniel",
     "senha": "12345678",
     "estatisticas": {
-      "partidas": 0,
-      "vitorias": 0,
+      "partidas": 1,
+      "vitorias": 1,
       "derrotas": 0,
-      "taxaVitoria": 0,
+      "taxaVitoria": 1,
       "taxaDerrota": 0
     },
     "medalhas": []
