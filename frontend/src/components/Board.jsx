@@ -1,8 +1,6 @@
-// src/components/Board.jsx
 import Cell from './Cell';
 import './Board.css';
 
-// Recebemos o array 'cells' como propriedade. Se não vier nada, criamos um vazio por segurança.
 export default function Board({ isOpponent, cells = Array(100).fill('empty'), onCellClick }) {
   const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -19,7 +17,6 @@ export default function Board({ isOpponent, cells = Array(100).fill('empty'), on
         </div>
         <div className="board-grid">
           
-          {/* Mapeia o estado REAL do jogo, sem nenhum dado fixo/mockado */}
           {cells.map((state, i) => (
             <Cell 
               key={i} 

@@ -16,7 +16,6 @@ export default function Board({ isOpponent, cells, onCellClick }) {
           {letters.map(letter => <div key={letter} className="coord-label">{letter}</div>)}
         </div>
         <div className="board-grid">
-          {/* O tabuleiro agora renderiza o array "cells" que vem de fora */}
           {cells.map((state, i) => (
             <Cell key={i} state={state} onClick={() => onCellClick && onCellClick(i)} />
           ))}

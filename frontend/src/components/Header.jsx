@@ -5,17 +5,15 @@ import './Header.css';
 
 export default function Header() {
   const navigate = useNavigate();
-  // Estado para controlar se o menu lateral está aberto ou fechado
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Função para alternar o menu
+  //função para alternar o menu
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <>
       <header className="game-header">
-        {/* Ícone de Menu Hambúrguer (agora tem onClick) */}
-        <button className="hamburger-btn" onClick={toggleMenu} title="Menu Principal">
+        <button className="hamburger-btn" onClick={toggleMenu} title="Menu">
           <div className="bar"></div>
           <div className="bar"></div>
           <div className="bar"></div>
@@ -28,15 +26,11 @@ export default function Header() {
         </button>
       </header>
 
-      {/* --- MENU LATERAL (SIDEBAR) --- */}
-      
-      {/* 1. O fundo escuro que clica para fechar */}
       <div 
         className={`sidebar-overlay ${isMenuOpen ? 'open' : ''}`} 
         onClick={toggleMenu}
       ></div>
 
-      {/* 2. O painel do menu que desliza */}
       <aside className={`sidebar-menu ${isMenuOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <h3>Opções</h3>
@@ -44,15 +38,15 @@ export default function Header() {
         </div>
         
         <nav className="sidebar-nav">
-          {/* Botão de Ranking */}
+          {/*botão de ranking*/}
           <button 
-            onClick={() => navigate('/ranking')} // Futuramente pode criar uma página Ranking.jsx
+            onClick={() => navigate('/ranking')}
             className="drawn-btn yellow-btn"
           >
             Ranking de Jogadores
           </button>
           
-          {/* Botão de Menu */}
+          {/*menu*/}
           <button 
             onClick={() => navigate('/home')} 
             className="drawn-btn blue-btn"
@@ -60,7 +54,7 @@ export default function Header() {
             Menu Principal
           </button>
           
-          {/* Botão de Deslogar */}
+          {/*deslogar*/}
           <button 
             onClick={() => navigate('/login')} 
             className="drawn-btn red-btn"

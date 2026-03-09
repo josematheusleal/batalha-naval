@@ -1,4 +1,3 @@
-/* src/components/Header.css */
 .game-header {
   display: flex;
   justify-content: space-between;
@@ -17,7 +16,6 @@
   letter-spacing: 1px;
 }
 
-/* --- Menu Hambúrguer (no Header) --- */
 .hamburger-btn {
   background: none;
   border: none;
@@ -38,7 +36,6 @@
   border-radius: 2px;
 }
 
-/* --- Botão de Perfil (no Header) --- */
 .profile-btn {
   background: none;
   border: none;
@@ -61,22 +58,16 @@
   object-fit: cover; 
 }
 
-
-/* =========================================
-   MENU LATERAL (SIDEBAR) DESENHADO
-========================================= */
-
-/* Fundo escuro atrás do menu */
 .sidebar-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px); /* Dá um leve desfoque no jogo atrás */
+  backdrop-filter: blur(2px); 
   opacity: 0; 
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 40; /* Fica acima do jogo, mas abaixo do menu */
+  z-index: 40;
 }
 
 .sidebar-overlay.open {
@@ -84,27 +75,24 @@
   pointer-events: auto;
 }
 
-/* Painel Lateral */
 .sidebar-menu {
   position: fixed;
   top: 0; 
-  left: -320px; /* Fica escondido fora da tela pela esquerda */
+  left: -320px;
   width: 300px; 
   height: 100vh;
-  background-color: #f8f9fa; /* Fundo claro combinando com a página */
-  border-right: 4px solid #111111; /* Borda grossa estilo cartoon */
+  background-color: #f8f9fa;
+  border-right: 4px solid #111111;
   z-index: 50;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex; 
   flex-direction: column;
 }
 
-/* Quando a classe 'open' é adicionada, ele desliza pra dentro */
 .sidebar-menu.open {
   transform: translateX(320px);
 }
 
-/* Cabeçalho do Menu Lateral */
 .sidebar-header {
   display: flex; 
   justify-content: space-between; 
@@ -133,8 +121,6 @@
 
 .close-btn:hover { transform: scale(1.2) rotate(90deg); }
 
-
-/* --- BOTÕES ESTILO DESENHADO / CARTOON --- */
 .sidebar-nav { 
   padding: 24px; 
   display: flex; 
@@ -143,7 +129,7 @@
 }
 
 .drawn-btn {
-  border: 3px solid #111111; /* Borda grossa */
+  border: 3px solid #111111;
   border-radius: 8px;
   padding: 14px 16px; 
   font-size: 16px; 
@@ -152,23 +138,20 @@
   cursor: pointer; 
   text-align: left; 
   
-  /* O segredo do estilo desenhado: Sombra sólida preta! */
   box-shadow: 4px 4px 0px #111111; 
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-/* Animação de pressionar o botão desenhado */
 .drawn-btn:hover { 
-  transform: translate(-2px, -2px); /* Sob um pouquinho ao passar o mouse */
+  transform: translate(-2px, -2px); 
   box-shadow: 6px 6px 0px #111111; 
 }
 
 .drawn-btn:active { 
-  transform: translate(4px, 4px); /* Afunda o botão ao clicar */
-  box-shadow: 0px 0px 0px #111111; /* A sombra some pois ele "encostou" no fundo */
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px #111111;
 }
 
-/* Cores vibrantes para combinar com os tabuleiros */
 .blue-btn { background-color: #6b9cf2; }
 .red-btn { background-color: #f86e63; }
 .white-btn { background-color: #ffffff; }
