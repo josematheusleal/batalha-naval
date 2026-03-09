@@ -40,5 +40,19 @@
       "taxaDerrota": 0
     },
     "medalhas": []
+  },
+  {
+    "id": "1773075212806",
+    "login": "danferreira",
+    "nome": "Daniel",
+    "senha": "12345678",
+    "estatisticas": {
+      "partidas": 0,
+      "vitorias": 0,
+      "derrotas": 0,
+      "taxaVitoria": 0,
+      "taxaDerrota": 0
+    },
+    "medalhas": []
   }
 ]

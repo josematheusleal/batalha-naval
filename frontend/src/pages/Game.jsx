@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Board from '../components/Board';
@@ -15,7 +15,8 @@ export default function Game() {
   const [opponentBoard, setOpponentBoard] = useState(Array(100).fill('empty'));
   const [isMyTurn, setIsMyTurn] = useState(false);
   const [animatingIndex, setAnimatingIndex] = useState(null);
-  
+  const [aiAnimatingIndex, setAiAnimatingIndex] = useState(null); 
+  const prevPlayerBoard = useRef(Array(100).fill('empty'));
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [selectedMoveShip, setSelectedMoveShip] = useState('');
   const [campaignStage, setCampaignStage] = useState(() => {
@@ -90,6 +91,36 @@ export default function Game() {
     }
   };
 
+  useEffect(() => {
+    if (!gameState || gameState.state !== 'playing') {
+      prevPlayerBoard.current = playerBoard;
+      return;
+    }
+
+    const prev = prevPlayerBoard.current;
+    const current = playerBoard;
+
+    const changedIndex = current.findIndex((cell, i) => prev[i] !== cell);
+
+    if (changedIndex !== -1) {
+      const estadoAntigo = prev[changedIndex];
+      const estadoNovo = current[changedIndex];
+      
+      console.log(`MUDANÇA DETECTADA! Index: ${changedIndex} | Antes: ${estadoAntigo} | Agora: ${estadoNovo}`);
+
+      if (estadoNovo !== 'ship' && estadoNovo !== 'empty') {
+        console.log("É UM ATAQUE DA IA, Ligando animação...");
+        
+        setAiAnimatingIndex(changedIndex);
+        setTimeout(() => {
+          setAiAnimatingIndex(null);
+        }, 500);
+      }
+    }
+
+    prevPlayerBoard.current = current;
+  }, [playerBoard, gameState]);
+
   const handleMoveShip = async (direction) => {
     if (!selectedMoveShip) {
         alert("Selecione um navio para mover!");
@@ -140,7 +171,11 @@ export default function Game() {
             <div className="section-header">
                <h1>Sua Frota {gameState.gameMode === 'campanha' && `- Fase ${campaignStage}`}</h1>
             </div>
-            <Board isOpponent={false} cells={playerBoard} />
+            <Board 
+               isOpponent={false} 
+               cells={playerBoard} 
+               animatingIndex={aiAnimatingIndex} 
+            />
             
             {gameState.gameMode === 'dinamico' && (
               <div className="drawn-card dynamic-panel" style={{marginTop: '20px'}}>
